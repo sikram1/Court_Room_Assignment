@@ -130,7 +130,7 @@ export default function MessagePanel({
                     );
                     setTimeout(() => onCourtTrigger?.(text), 0);
                   }
-                }, 8000);
+                }, 20000);
 
                 urgentMsg.courtTimerId = courtTimer;
                 return [urgentMsg, ...prevMsgs];
@@ -138,7 +138,7 @@ export default function MessagePanel({
               return prevMsgs;
             });
           }
-        }, 8000);
+        }, 20000);
         escalationTimers.current.set(msg.id, escalationId);
       }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      
+<header style={{ position: "fixed", left: 8, top: 8, zIndex: 1000 }}>
+  <div style={{ background: "#fff", padding: "4px 8px", borderRadius: 6, fontSize: 12 }}>
+    Student Rollno: <strong>20900837</strong>
+  </div>
+</header>
+<main style={{ paddingTop: 48 }}>{children}</main>
+
       </body>
     </html>
   );

@@ -192,41 +192,96 @@ export default function MessagePanel({
   };
 
   // ---------- RENDER ----------
-  return (
-    <div style={{ background: "rgba(255,255,255,0.98)", padding: 12, borderRadius: 8 }}>
-      <h3 style={{ marginTop: 0 }}>Messages</h3>
-      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-        {[...messages].map((m) => (
+ return (
+  <div
+    style={{
+      background: "rgba(255,255,255,0.98)",
+      padding: 16,
+      borderRadius: 10,
+      boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+      fontFamily: "Segoe UI, Roboto, sans-serif",
+    }}
+  >
+    <h3
+      style={{
+        marginTop: 0,
+        fontSize: "1.1rem",
+        color: "#111827",
+        borderBottom: "2px solid #e5e7eb",
+        paddingBottom: 6,
+        marginBottom: 10,
+      }}
+    >
+      Messages
+    </h3>
+
+    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+      {messages.length === 0 ? (
+        <li style={{ textAlign: "center", color: "#9ca3af", padding: "10px 0" }}>
+          No messages yet
+        </li>
+      ) : (
+        [...messages].map((m) => (
           <li
             key={m.id}
             style={{
-              borderBottom: "1px solid #eef2f7",
-              padding: "10px 0",
+              border: "1px solid #e5e7eb",
+              borderLeft: m.urgent ? "4px solid #dc2626" : "4px solid transparent",
+              padding: "10px 12px",
+              marginBottom: 10,
+              borderRadius: 8,
+              background: m.urgent ? "#fef2f2" : "#f9fafb",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              background: m.urgent ? "#fee2e2" : "transparent",
+              transition: "background 0.2s ease",
             }}
           >
-            <div>
-              <div style={{ fontWeight: 700 }}>{m.source}</div>
-              <div style={{ color: m.urgent ? "#b91c1c" : "#374151" }}>{m.text}</div>
-              <div style={{ fontSize: 11, color: "#6b7280" }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, color: "#111827" }}>{m.source}</div>
+              <div
+                style={{
+                  color: m.urgent ? "#b91c1c" : "#374151",
+                  fontSize: 14,
+                  marginTop: 2,
+                }}
+              >
+                {m.urgent && (
+                  <span style={{ fontWeight: "bold", color: "#dc2626" }}>URGENT: </span>
+                )}
+                {m.text}
+              </div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: "#6b7280",
+                  marginTop: 4,
+                }}
+              >
                 {new Date(m.createdAt).toLocaleTimeString()}
               </div>
             </div>
 
-            {/*  No Handle button for Family messages */}
             {!m.handled && m.source !== "Family" ? (
               <button
                 onClick={() => handleMsgClick(m.id, m.text, m.source)}
                 style={{
                   cursor: "pointer",
-                  padding: "6px 10px",
+                  padding: "6px 12px",
                   borderRadius: 8,
                   background: "#f3f4f6",
                   border: "1px solid #e5e7eb",
+                  color: "#111827",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  transition: "all 0.2s ease",
                 }}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.background = "#e5e7eb")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.background = "#f3f4f6")
+                }
               >
                 Handle
               </button>
@@ -234,8 +289,8 @@ export default function MessagePanel({
               <img src="/icons/checked-icon.svg" alt="Handled" width={20} height={20} />
             ) : null}
           </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+        ))
+      )}
+    </ul>
+  </div>
+  )};
